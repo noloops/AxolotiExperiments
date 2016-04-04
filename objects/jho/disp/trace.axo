@@ -1,0 +1,37 @@
+<objdefs>
+   <obj.normal id="trace" uuid="5da15b3e93816ccb071f8d9966a63d9e68665a34" sha="e1df922e5f02b8b1af34919b859885a6ed5d5486">
+      <sDescription>print object - prints frac on change, max 1/sec</sDescription>
+      <author>Jan Hofmann</author>
+      <license>GPL</license>
+      <inlets>
+         <frac32 name="v"/>
+      </inlets>
+      <outlets/>
+      <displays/>
+      <params/>
+      <attribs>
+         <table name="text"/>
+      </attribs>
+     <includes>
+       <include>./jho_trace.h</include>
+     </includes>
+     <code.declaration><![CDATA[int32_t last_;
+int32_t updt_;]]></code.declaration>
+      <code.init><![CDATA[last_ =0;
+updt_ =3001;]]></code.init>
+      <code.krate>
+            <![CDATA[
+	if(updt_ < 3000){
+	  updt_++;
+  }
+  else if (last_ != inlet_v) {
+    char buff[8];
+    int32_t n = jho_writeDecimalPlaces(inlet_v, 21, 5, buff);
+  
+    LogTextMessage("attr_text %5d.%s", n, buff);
+		last_ = inlet_v;
+		updt_ = 0;
+  }
+]]></code.krate>
+   </obj.normal>
+</objdefs>

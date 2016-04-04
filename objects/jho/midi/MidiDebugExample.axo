@@ -1,0 +1,48 @@
+<objdefs>
+   <obj.normal id="MidiDebugExample" uuid="72d026d4ac0ae4f1e946e6f42491581c3d1f1734" sha="e1698c796d6f14efb28d15dbbf9adb98117d680c">
+      <sDescription>Midi debug example</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <frac32 name="a" description="a"/>
+        <int32 name="b" description="b"/>
+        <frac32.positive name="c" description="c"/>
+        <int32.positive name="d" description="d"/>
+      </inlets>
+      <outlets/>
+      <displays/>
+     <params>
+     </params>
+      <attribs>
+      </attribs>
+     <includes>
+       <include>./jho_MidiDebug.h</include>
+     </includes>
+     <code.declaration><![CDATA[
+]]></code.declaration>
+     <code.init><![CDATA[
+]]>
+     </code.init>     
+      <code.krate>
+        <![CDATA[
+      TRACE_Q31('b', 0x7FFFFFFF);
+      TRACE_Q31('c', 0x80000000);
+      TRACE_Q30('d', 0x3FFFFFFF);
+      TRACE_Q30('e', 0xC0000000);
+      TRACE_Q29('f', 0x1FFFFFFF);
+      TRACE_Q29('g', 0xE0000000);
+      TRACE_Q28('h', 0x0FFFFFFF);
+      TRACE_Q28('i', 0xF0000000);
+      TRACE_Q27('j', 0x07FFFFFF);
+      TRACE_Q27('k', 0xF8000000);
+      TRACE_I('i', -9876543);
+      TRACE_I('j', -9123456);
+      TRACE_U('k', 3);
+      TRACE_U('l', 31234567);
+      TRACE_F('m', 321.2345);
+      TRACE_F('m', -21.23456);
+      
+      TRACE_Q21('a', inlet_a);           
+]]></code.krate>
+   </obj.normal>
+</objdefs>

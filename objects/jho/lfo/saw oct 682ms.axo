@@ -1,0 +1,46 @@
+<objdefs>
+   <obj.normal id="saw oct 682ms" uuid="dac8306f61e57a78ae8f5804072b474a93ed12de" sha="a34c794d20f5011c4587ad5ec2bd95945586e007">
+      <sDescription>saw wave oscillator for oct delay line</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <frac32.bipolar name="detune" description="detune +/- one semitone"/>
+        <bool32.rising name="reset" description="reset"/>
+      </inlets>
+      <outlets>
+        <frac32buffer.positive name="o" description="saw wave"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+      <attribs/>
+     <includes>
+       <include>./saw_oct_682ms.h</include>
+     </includes>
+     <code.declaration>
+        <![CDATA[
+        uint32_t next_; 
+        uint32_t reset_;
+]]></code.declaration>
+      <code.init>
+        <![CDATA[
+        next_ = 0; 
+        reset_ = 0;
+]]></code.init>
+     <code.krate>
+     <![CDATA[
+       if (inlet_reset && !reset_) {
+          next_ = 0;
+       }
+       reset_ = inlet_reset;
+       
+       int32_t step = jho_SawOct682ms_getStep(inlet_detune);
+     ]]>
+     </code.krate>
+     <code.srate>
+     <![CDATA[
+      outlet_o = next_;
+      next_ = (next_ + step) & ((1<<27)-1);
+   ]]></code.srate>
+   </obj.normal>
+</objdefs>

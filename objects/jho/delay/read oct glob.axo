@@ -1,0 +1,63 @@
+<objdefs>
+   <obj.normal id="read oct glob" uuid="ec768f2a2bb579ae8a5bcf1b588f49c514ae3469" sha="50a879fb54eedd32f3958e285bc6c62d1ac8d275">
+      <sDescription>delay read, sub oct</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <helpPatch>delay.axh</helpPatch>
+      <inlets>
+        <bool32.rising name="r" description="reset"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="wave"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+     <attribs>
+     </attribs>
+     <includes>
+       <include>./jho_write_glob.h</include>
+     </includes>
+     <code.declaration>
+       <![CDATA[
+uint32_t readpos;
+uint32_t lastval;
+bool semi;
+int rtrig;
+]]>
+     </code.declaration>
+     <code.init>
+       <![CDATA[
+  readpos = 0;
+  lastval = 0;
+  semi = false;
+  rtrig = 0;
+]]>
+     </code.init>
+     <code.krate>
+       <![CDATA[  
+    if (rtrig != inlet_r) {
+        if (inlet_r > rtrig) {
+          readpos = jho_write_glob_writepos & JHO_WRITE_GLOB_LENGTHMASK;
+          lastval = jho_write_glob_array[readpos]<<14;
+          semi = false;
+        }
+        rtrig = inlet_r;
+    }
+    int32_t res;
+]]></code.krate>
+      <code.srate>
+        <![CDATA[  
+    res = lastval;
+		if (semi) {
+      ++readpos;
+      readpos &= JHO_WRITE_GLOB_LENGTHMASK;
+      lastval = jho_write_glob_array[readpos]<<14;
+			res += lastval;
+			res >>= 1;
+		}
+    semi = !semi;
+    outlet_out = res;
+]]></code.srate>
+   </obj.normal>
+</objdefs>

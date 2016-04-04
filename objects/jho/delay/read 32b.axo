@@ -1,0 +1,45 @@
+<objdefs>
+   <obj.normal id="read 32b" uuid="45a9c9adb16d3b618a893f3d44537c1cd167a3a9" sha="b2c342fff174e84b055e9c7e07c77742427f95af">
+      <sDescription>delay read, non-interpolated</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <inlets>
+         <frac32 name="time" description="delay time (fraction of total delayline size)"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="wave"/>
+      </outlets>
+      <displays/>
+      <params>
+         <frac32.u.map name="time" noLabel="true"/>
+      </params>
+      <attribs>
+         <objref name="delayname"/>
+      </attribs>
+      <code.krate><![CDATA[   uint32_t delay = attr_delayname.writepos - (__USAT(param_time + inlet_time,27)>>(27-attr_delayname.LENGTHPOW)) - BUFSIZE;
+]]></code.krate>
+      <code.srate><![CDATA[  outlet_out= attr_delayname.array[(delay++) & attr_delayname.LENGTHMASK];
+]]></code.srate>
+   </obj.normal>
+   <obj.normal id="read 32b" uuid="e018b10abfb776d35967893e344620886d418f54" sha="1b22995c918e3090195eb0a0e6358639669a6f16">
+      <sDescription>delay read, non-interpolated</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <inlets>
+         <frac32buffer name="time" description="delay time (fraction of total delayline size)"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="wave"/>
+      </outlets>
+      <displays/>
+      <params>
+         <frac32.u.map name="time" noLabel="true"/>
+      </params>
+      <attribs>
+         <objref name="delayname"/>
+      </attribs>
+      <code.srate><![CDATA[      uint32_t delay1 = attr_delayname.writepos - (__USAT(param_time + inlet_time,27)>>(27-attr_delayname.LENGTHPOW)) - BUFSIZE + buffer_index;
+      outlet_out= attr_delayname.array[delay1 & attr_delayname.LENGTHMASK];
+]]></code.srate>
+   </obj.normal>
+</objdefs>

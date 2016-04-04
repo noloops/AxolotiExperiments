@@ -1,0 +1,31 @@
+<objdefs>
+   <obj.normal id="sum 4" uuid="e5514179768ebed659b696fd4af4fd906f99dce2" sha="276afce4d6ab001db085bd02356ebaaca4a97626">
+      <sDescription>4 input s-rate mixer</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+         <frac32buffer name="in1" description="input 1"/>
+         <frac32buffer name="in2" description="input 2"/>
+         <frac32buffer name="in3" description="input 3"/>
+         <frac32buffer name="in4" description="input 4"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="mix out"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+     <attribs>
+       <table name="shift"/>
+     </attribs>
+     <code.krate>
+       <![CDATA[ int32_t sum;
+]]>
+     </code.krate>
+     <code.srate>
+        <![CDATA[
+      sum = inlet_in1 + inlet_in2 + inlet_in3 + inlet_in4;
+      outlet_out = sum >> (attr_shift);
+]]></code.srate>
+   </obj.normal>
+</objdefs>

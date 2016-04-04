@@ -1,0 +1,34 @@
+<objdefs>
+   <obj.normal id="kschmidt" uuid="cd9ecb4b522e507cecfe7b7a5c529b9cd58039b" sha="b53369aace4b60ca0cf5c7cefb13ee75eeb84e66">
+      <sDescription>Kontrol rate schmidt trigger</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+         <frac32 name="input" description="input"/>
+      </inlets>
+      <outlets>
+        <bool32 name="out" description="out"/>
+      </outlets>
+      <displays/>
+     <params>
+       <frac32.s.map name="hi"/>
+       <frac32.s.map name="lo"/>
+     </params>
+      <attribs/>
+      <code.declaration><![CDATA[   int32_t ntrig;
+]]></code.declaration>
+      <code.init><![CDATA[ntrig = 0;
+]]></code.init>
+      <code.krate>
+        <![CDATA[
+      if (ntrig) {
+        if (inlet_input < param_lo)
+          ntrig = 0;
+      }
+      else if (inlet_input > param_hi) {
+        ntrig = 1;
+      }
+      outlet_out= ntrig;
+]]></code.krate>
+   </obj.normal>
+</objdefs>

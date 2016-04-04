@@ -1,0 +1,39 @@
+<objdefs>
+   <obj.normal id="ahd rs" uuid="350ec6208fecc3636430b2640a7a976c6cf8ff9e" sha="59efbe1411b036ec4204653b79083a503aec941d">
+      <sDescription>attack hold decay envelope</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <helpPatch>env.axh</helpPatch>
+      <inlets>
+         <bool32.risingfalling name="gate" description="gate"/>
+      </inlets>
+      <outlets>
+         <frac32.positive name="env" description="envelope output"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+     <attribs>
+       <table name="ramp"/>
+     </attribs>
+     <includes>
+       <include>./jho_ahd_rs.h</include>
+     </includes>
+     <code.declaration><![CDATA[const uint16_t *p;
+]]></code.declaration>
+      <code.init>
+  <![CDATA[   p = (attr_ramp);
+]]></code.init>
+      <code.krate>
+        <![CDATA[   
+      if (inlet_gate>0) {
+        if (p < JHO_LAST_ARRAY_EL(attr_ramp))
+          ++p;
+      }
+      else if (p > (attr_ramp)) {
+        --p;
+      }
+      outlet_env = int32_t(*p) << 12;
+]]></code.krate>
+   </obj.normal>
+</objdefs>

@@ -1,0 +1,41 @@
+<objdefs>
+   <obj.normal id="test101" uuid="5b292d71ae6fa8645348aa54b6d36f12f753c7c9" sha="689c2ec59ad524fef1255d3586b8e2be26bdea27">
+      <sDescription>-</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <inlets>
+      </inlets>
+      <outlets>
+         <frac32.bipolar name="f" description="f"/>
+      </outlets>
+      <displays/>
+      <params>
+        <frac32.s.map.pitch name="pitch"/>
+        <int32 name="post" noLabel="false">
+          <MinValue i="0"/>
+          <MaxValue i="10"/>
+        </int32>
+      </params>
+      <attribs/>
+      <code.declaration><![CDATA[biquad_state bs;biquad_coefficients bc;
+]]></code.declaration>
+      <code.init><![CDATA[biquad_clearstate(&bs);
+]]></code.init>
+      <code.krate>
+        <![CDATA[      
+      int32_t filter_W0;
+      MTOF(param_pitch,filter_W0);
+      /*
+      if (param_post > 0)
+        filter_W0 = filter_W0 << param_post;
+      else if (param_post < 0)
+      */
+      filter_W0 = filter_W0 >> param_post;
+      /*
+      if (filter_W0 > (INT32_MAX / 4))
+          filter_W0 = INT32_MAX / 4;
+      */
+      outlet_f = filter_W0;
+]]></code.krate>
+   </obj.normal>
+</objdefs>

@@ -1,0 +1,58 @@
+<objdefs>
+   <obj.normal id="fade ramp" uuid="4667fb788e8f1105081d2d0274b4cd0177e2c93e" sha="85b9a0377b2c6e3f5fc46f3c450c530469723d7c">
+      <sDescription>-</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <frac32buffer name="a" description="audio input"/>
+         <bool32.risingfalling name="gate" description="gate"/>
+      </inlets>
+      <outlets>
+        <frac32buffer name="o" description="output"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+     <attribs>
+       <table name="ramp"/>
+     </attribs>
+     <includes>
+       <include>./jho_ahd_rs.h</include>
+     </includes>
+     <code.declaration><![CDATA[const uint16_t *p;
+]]></code.declaration>
+      <code.init>
+  <![CDATA[   p = (attr_ramp);
+]]></code.init>
+      <code.krate>
+        <![CDATA[
+	int32_t k;
+	int buffer_index=0;
+
+	if (inlet_gate > 0) {
+		for( ; buffer_index < BUFSIZE; ++buffer_index) {
+			if (p >= JHO_LAST_ARRAY_EL(attr_ramp))
+				break;
+			++p;
+			k = int32_t(*p) << 15;
+			outlet_o[buffer_index] =  ___SMMUL(inlet_a[buffer_index],k)<<2;
+		}
+		for( ; buffer_index < BUFSIZE; ++buffer_index) {
+			outlet_o[buffer_index] = inlet_a[buffer_index];
+		}
+	}
+	else {
+		for( ; buffer_index < BUFSIZE; ++buffer_index) {
+			if (p <= attr_ramp)
+				break;
+			--p;
+			k = int32_t(*p) << 15;
+			outlet_o[buffer_index] =  ___SMMUL(inlet_a[buffer_index],k)<<2;
+		}
+		for( ; buffer_index < BUFSIZE; ++buffer_index) {
+			outlet_o[buffer_index] = 0;
+		}
+	}      
+]]></code.krate>  
+   </obj.normal>
+</objdefs>

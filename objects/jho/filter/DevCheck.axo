@@ -1,0 +1,25 @@
+<objdefs>
+   <obj.normal id="DevCheck" uuid="45023fc6a0b2d1057f5f465197e71e707307899e" sha="a2f2c1100c4c91d503e3963290954a60895592ab">
+      <sDescription>-</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <inlets>
+      </inlets>
+     <displays>
+       <bool32 name="ok" noLabel="false"/>
+     </displays>
+      <params>
+      </params>
+     <attribs>
+       <table name="line"/>
+     </attribs>
+      <code.declaration><![CDATA[
+]]></code.declaration>
+      <code.init><![CDATA[
+]]></code.init>
+      <code.krate>
+        <![CDATA[     
+        disp_ok = (attr_line);
+]]></code.krate>
+   </obj.normal>
+</objdefs>

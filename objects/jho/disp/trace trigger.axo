@@ -1,0 +1,60 @@
+<objdefs>
+   <obj.normal id="trace trigger" uuid="b9f67dc872527044399e9ca73600e42db0cb6303" sha="8c06caa1e60a1988c8422b517d9d5882e41cec7a">
+      <sDescription>triggers trace macro entries</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+     <helpPatch>trace trigger.axh</helpPatch>
+     <inlets/>
+      <outlets>
+         <bool32 name="o" description="output"/>
+      </outlets>
+      <displays/>
+      <params>
+         <bool32.tgl name="trace" noLabel="true"/>
+      </params>
+      <attribs/>
+     <includes>
+       <include>./jho_trace.h</include>
+     </includes>
+     <code.declaration>
+       <![CDATA[
+       #ifdef JHO_TRACE_ENABLED
+       int32_t last_;
+       int32_t send_;
+       #endif
+       ]]>
+     </code.declaration>
+     <code.init>
+       <![CDATA[
+       #ifdef JHO_TRACE_ENABLED
+       last_ = 0;
+       send_ = 0;
+       jho_trace_reset();
+       #endif
+       ]]>
+     </code.init>
+     <code.krate>
+       <![CDATA[
+       outlet_o = param_trace;
+       #ifdef JHO_TRACE_ENABLED
+       jho_trace_collect = (param_trace != 0);
+       if (param_trace) {
+          if (!last_) {
+            jho_trace_reset();
+          }
+       }
+       else {
+          if (last_) {
+            jho_trace_logHeader();
+            send_ = JHO_TRACE_K_RATE_SEND_DELAY;
+          }
+          else if (--send_ < 0) {
+            send_ = JHO_TRACE_K_RATE_SEND_DELAY;
+            jho_trace_sendNext();
+          }
+       }
+       last_ = param_trace;
+        #endif
+]]></code.krate>
+   </obj.normal>
+</objdefs>
