@@ -1,0 +1,44 @@
+<objdefs>
+   <obj.normal id="para" uuid="a29b100083cedaa459ab815975bca1522847060f" sha="99665e5b7769936ac7fd4131e7ec08e0db62a847">
+      <sDescription>Notch filter (biquad)</sDescription>
+      <author>Johannes Taelman / Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+         <frac32buffer name="in" description="filter input"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="filter output"/>
+      </outlets>
+      <displays/>
+      <params>
+        <frac32.s.map.pitch name="pitch"/>
+        <frac32.u.map.filterq name="reso"/>
+        <frac32.s.map name="gain"/>
+        <bool32.tgl name="on" noLabel="true"/>
+      </params>
+      <attribs/>
+     <includes>
+       <include>./jho_extra_filters.h</include>
+     </includes>     
+      <code.declaration>
+       <![CDATA[biquad_state bs;biquad_coefficients bc;jho_biquad_para_Pars pars;
+]]></code.declaration>
+      <code.init>
+  <![CDATA[biquad_clearstate(&bs);
+      jho_biquad_para_coefs(&bc, pars);
+]]></code.init>
+      <code.krate>
+        <![CDATA[
+      if (!param_on) {
+        for(int i = 0; i < BUFSIZE; ++i) {
+          outlet_out[i]= inlet_in[i];
+        }
+        return;
+      }
+      if (pars.update(param_pitch, param_reso, param_gain)) {
+        jho_biquad_para_coefs(&bc, pars);
+      }
+      biquad_dsp(&bs,&bc,inlet_in,outlet_out);
+]]></code.krate>
+   </obj.normal>
+</objdefs>

@@ -1,0 +1,28 @@
+<objdefs>
+   <obj.normal id="exec order" uuid="e1354734-f9e5-4d4d-81fd-2e1c2e0abd7a" sha="dcbb9bae-5d06-405b-ac9c-c341070d8d64">
+      <sDescription>execution order demo</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+      </inlets>
+      <outlets/>
+      <displays>
+         <int32.label name="n" noLabel="true"/>
+      </displays>
+      <params>
+         <bool32.tgl name="reset" noLabel="true"/>
+      </params>
+      <attribs/>
+     <includes>
+       <include>./exec_order.h</include>
+     </includes>
+      <code.krate>
+        <![CDATA[
+      if (param_reset) {
+        jho_exec_order_counter = 0;
+      }
+      
+      disp_n = ++jho_exec_order_counter;
+]]></code.krate>
+   </obj.normal>
+</objdefs>

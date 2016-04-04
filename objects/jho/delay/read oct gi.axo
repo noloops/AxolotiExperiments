@@ -1,0 +1,51 @@
+<objdefs>
+   <obj.normal id="read oct gi" uuid="3669c01c0e660518f84dc8130d0a35753f279739" sha="1731da6f329107273c91721e1f94f1392c1fbf1a">
+      <sDescription>delay read, sub oct</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <bool32.rising name="r" description="reset!"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="wave"/>
+      </outlets>
+      <displays/>
+     <params>
+       <frac32.s.map name="pitch"/>
+     </params>
+     <attribs>
+     </attribs>
+     <includes>
+       <include>./jho_write_glob.h</include>
+     </includes>
+     <code.declaration>
+       <![CDATA[
+uint32_t readpos;
+uint32_t lastval;
+bool semi;
+int rtrig;
+]]>
+     </code.declaration>
+     <code.init>
+       <![CDATA[
+  readpos = 0;
+  rtrig = 0;
+]]>
+     </code.init>
+     <code.krate>
+       <![CDATA[  
+    if (rtrig != inlet_r) {
+        if (inlet_r > rtrig) {
+          readpos = (jho_write_glob_writepos - BUFSIZE - 2) & JHO_WRITE_GLOB_LENGTHMASK;
+          readpos <<= 15;
+        }
+        rtrig = inlet_r;
+    }
+    int32_t shift = (param_pitch >> 15) + (1 << 14);
+]]></code.krate>
+      <code.srate>
+        <![CDATA[  
+    outlet_out = joh_dlyNext(&readpos, shift);
+]]></code.srate>
+   </obj.normal>
+</objdefs>

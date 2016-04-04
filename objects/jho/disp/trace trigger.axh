@@ -1,0 +1,52 @@
+<patch-1.0>
+   <obj type="disp/trace trigger" sha="" uuid="b9f67dc872527044399e9ca73600e42db0cb6303" name="trace_1" x="14" y="14">
+      <params>
+         <bool32.tgl name="trace" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="disp/hex" sha="e21d1bcdfadc4f2009b547d002484bede0762978" uuid="87617898f70d90033f8add921438bf0d11721fdd" name="hexi_1" x="266" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial b" sha="b26f881dfa1451f0269e068eb6b3d824b43b41d3" uuid="862e7d7f29093cb1ce4aed72244d118ad4d46692" name="dial_1" x="70" y="84">
+      <params>
+         <frac32.s.map name="value" value="-8.28000020980835"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="disp/trace example" sha="9b7e5e7ed982874594ebd27066840199b06a0804" uuid="34f2048eea16530db682e96ea97c6b4b3119b805" name="trace_2" x="252" y="140">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="math/div 64" sha="e63365a7cd04c05a073cdb3f5214f9c2e8d03214" uuid="da82c8ea54e956811f1d7264d921628e3301971e" name="div_1" x="210" y="252">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="disp/dial b" sha="5d4fe09e04ac9d02b2f3224e493c9536fe25fa66" uuid="9ffed04e6a3052d9001eda83bae7024cb6d17037" name="dial_2" x="336" y="252">
+      <params/>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="dial_1" outlet="out"/>
+         <dest obj="trace_2" inlet="in"/>
+         <dest obj="hexi_1" inlet="in"/>
+         <dest obj="div_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="div_1" outlet="out"/>
+         <dest obj="dial_2" inlet="in"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>347</x>
+      <y>145</y>
+      <width>514</width>
+      <height>585</height>
+   </windowPos>
+</patch-1.0>

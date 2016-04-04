@@ -1,0 +1,48 @@
+<objdefs>
+   <obj.normal id="ParaA" uuid="563c3abe5cacb8b2de2cde557676d70c58714945" sha="ef8112aaf59be7a9ceecbbacfc3438c24bfabc90">
+      <sDescription>2-pole resonant band-pass filter (biquad)</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <helpPatch>filter.axh</helpPatch>
+      <inlets>
+         <frac32buffer name="in" description="filter input"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="filter output"/>
+        <int32.positive name="count" description="counter"/>
+      </outlets>
+      <displays/>
+      <params>
+        <frac32.s.map.pitch name="pitch"/>
+        <frac32.u.map.filterq name="reso"/>
+        <frac32.s.map name="gain"/>
+        <frac32.u.map name="level"/>
+      </params>
+      <attribs/>
+     <includes>
+       <include>./jho_filters.h</include>
+     </includes>     
+      <code.declaration><![CDATA[biquad_state bs_;
+      biquad_coefficients bc_;
+      jho_ParaEqPars p_;
+      int32_t count_;
+]]></code.declaration>
+      <code.init><![CDATA[biquad_clearstate(&bs_);
+      jho_clear(p_);
+      jho_calcPeakCombi_1(p_, bc_);
+      count_ = 0;
+]]></code.init>
+      <code.krate>
+  <![CDATA[      if (jho_checkChanged(p_, param_pitch, param_reso, param_gain, param_level)) {
+          //jho_calcPeakCombi_1(p_, bc_);
+          ++count_;
+      }
+      jho_calcPeakCombi_1(p_, bc_);
+      outlet_count = count_;
+      biquad_dsp(&bs_,&bc_,inlet_in,outlet_out);
+]]></code.krate>
+     <code.srate>
+       <![CDATA[
+]]></code.srate>     
+   </obj.normal>
+</objdefs>

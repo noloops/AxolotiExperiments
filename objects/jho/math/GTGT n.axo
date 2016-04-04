@@ -1,0 +1,20 @@
+<objdefs>
+   <obj.normal id="&gt;&gt; n" uuid="8f78bf063829d27655a3fca34da24b4efbc0903c" sha="bd17694e21f7832cd39c78072fef0e7d8f1f9633">
+      <sDescription>Left shift. Doubles the value &quot;shift&quot; times, with overflow. If overflow is not desireable, use &quot;muls&quot;.</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <helpPatch>math.axh</helpPatch>
+      <inlets>
+         <frac32buffer name="a" description="a"/>
+         <int32 name="n" description="left shift n"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="result" description="a amplified with i 6dB steps"/>
+      </outlets>
+      <displays/>
+      <params/>
+      <attribs>
+      </attribs>
+      <code.srate><![CDATA[outlet_result= inlet_a >> 1;]]></code.srate>
+   </obj.normal>
+</objdefs>

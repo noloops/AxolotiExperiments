@@ -1,0 +1,29 @@
+<objdefs>
+   <obj.normal id="write glob" uuid="ac39cc6ee9627d8c6ec46f32c7447f0bb33984dc" sha="731df6e037ac1affcfa5f09bf1ccb2cf2efb58c1">
+      <sDescription>delayline definition, read with delread~</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <helpPatch>delay.axh</helpPatch>
+      <inlets>
+         <frac32buffer name="in" description="wave input"/>
+      </inlets>
+      <outlets/>
+      <displays/>
+      <params/>
+      <attribs>
+      </attribs>
+     <includes>
+       <include>./jho_write_glob.h</include>
+     </includes>
+     <code.declaration><![CDATA[]]></code.declaration>
+      <code.init>
+        <![CDATA[   int i;
+   jho_write_glob_writepos = 0;
+   for(i=0;i<JHO_WRITE_GLOB_LENGTH;i++) jho_write_glob_array[i] = 0;
+]]></code.init>
+      <code.srate>
+  <![CDATA[  jho_write_glob_writepos = (jho_write_glob_writepos + 1) & JHO_WRITE_GLOB_LENGTHMASK;
+   jho_write_glob_array[jho_write_glob_writepos] = __SSAT(inlet_in>>14,16);
+]]></code.srate>
+   </obj.normal>
+</objdefs>

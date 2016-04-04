@@ -1,0 +1,41 @@
+<objdefs>
+   <obj.normal id="flipflop i" uuid="217b3497e44c1f6b78e752638eefb20fb1a575c1" sha="ea54f25662f28bc8fffe7cf5be3ff3616d138689">
+      <sDescription>flipflop</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <int32 name="i" description="input"/>
+      </inlets>
+      <outlets>
+        <bool32 name="pos" description="output"/>
+        <bool32 name="neg" description="inverted output"/>
+      </outlets>
+      <displays/>
+      <params/>
+     <attribs>
+       <table name="index"/>
+     </attribs>
+      <code.declaration><![CDATA[   bool state_; int in_;
+]]></code.declaration>
+      <code.init>
+        <![CDATA[
+      in_ = 0;
+      state_ = true;
+]]></code.init>
+      <code.krate>
+        <![CDATA[
+      if ((in_ != inlet_i) && (attr_index == inlet_i)) {
+        state_ = !state_;
+      }
+      in_ = inlet_i;
+      if (state_) {
+        outlet_pos = 1 << 27;
+        outlet_neg = 0;
+      }
+      else {
+        outlet_pos = 0;
+        outlet_neg = 1 << 27;
+      }
+]]></code.krate>
+   </obj.normal>
+</objdefs>

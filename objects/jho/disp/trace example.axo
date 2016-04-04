@@ -1,0 +1,24 @@
+<objdefs>
+   <obj.normal id="trace example" uuid="34f2048eea16530db682e96ea97c6b4b3119b805" sha="8821d42e4a09b8553ea41c95b7b95df26e37b480">
+      <sDescription>example how to use the trace macros</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+     <helpPatch>trace trigger.axh</helpPatch>     
+      <inlets>
+         <frac32.bipolar name="in" description="input"/>
+      </inlets>
+      <outlets/>
+      <displays>
+         <frac32.s.dial name="v" noLabel="true"/>
+      </displays>
+      <params/>
+      <attribs/>
+     <includes>
+       <include>./jho_trace_example.h</include>
+     </includes>     
+      <code.krate>
+        <![CDATA[disp_v=inlet_in;
+        jho_trace_example(inlet_in);        
+]]></code.krate>
+   </obj.normal>
+</objdefs>

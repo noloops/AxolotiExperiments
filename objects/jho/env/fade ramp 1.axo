@@ -1,0 +1,45 @@
+<objdefs>
+   <obj.normal id="fade ramp 1" uuid="c2e3685037c1ba2154205e21303efbc9890e0c45" sha="c5f8804d52725cc396073b44a63601be0cf92ca1">
+      <sDescription>-</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+        <frac32buffer name="a" description="audio input"/>
+         <bool32.risingfalling name="gate" description="gate"/>
+      </inlets>
+      <outlets>
+        <frac32buffer name="o" description="output"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+     <attribs>
+       <table name="ramp"/>
+     </attribs>
+     <includes>
+       <include>./jho_ahd_rs.h</include>
+     </includes>
+     <code.declaration><![CDATA[const uint16_t *p;
+]]></code.declaration>
+      <code.init>
+  <![CDATA[   p = (attr_ramp);
+]]></code.init>
+      <code.krate>
+        <![CDATA[ int32_t k;
+]]></code.krate>
+     <code.srate>
+       <![CDATA[
+      if (inlet_gate>0) {
+        if (p < JHO_LAST_ARRAY_EL(attr_ramp))
+          ++p;
+      }
+      else if (p > (attr_ramp)) {
+        --p;
+      }
+      k = int32_t(*p) << 15;
+      
+      outlet_o =  ___SMMUL(inlet_a,k)<<2;
+]]>
+     </code.srate>     
+   </obj.normal>
+</objdefs>

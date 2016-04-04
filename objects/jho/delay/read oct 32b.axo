@@ -1,0 +1,61 @@
+<objdefs>
+   <obj.normal id="read oct 32b" uuid="130d54eb186c4feeb4185557bab8e1c377ee871d" sha="2cc185a0786f0adc7222e04c37fdf520de0ad10d">
+      <sDescription>delay read, sub oct</sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <helpPatch>delay.axh</helpPatch>
+      <inlets>
+        <bool32.rising name="r" description="reset"/>
+      </inlets>
+      <outlets>
+         <frac32buffer name="out" description="wave"/>
+      </outlets>
+      <displays/>
+      <params>
+      </params>
+      <attribs>
+         <objref name="delayname"/>
+      </attribs>
+     <code.declaration>
+       <![CDATA[
+uint32_t readpos;
+uint32_t lastval;
+bool semi;
+int rtrig;
+]]>
+     </code.declaration>
+     <code.init>
+       <![CDATA[
+  readpos = 0;
+  lastval = 0;
+  semi = false;
+  rtrig = 0;
+]]>
+     </code.init>
+     <code.krate>
+       <![CDATA[  
+    if (rtrig != inlet_r) {
+        if (inlet_r > rtrig) {
+          readpos = (attr_delayname.writepos - BUFSIZE - 2) & attr_delayname.LENGTHMASK;
+          lastval = attr_delayname.array[readpos];
+          semi = false;
+        }
+        rtrig = inlet_r;
+    }
+    int32_t res;
+]]></code.krate>
+      <code.srate>
+        <![CDATA[  
+    res = lastval;
+		if (semi) {
+      ++readpos;
+      readpos &= attr_delayname.LENGTHMASK;
+      lastval = attr_delayname.array[readpos];
+			res += lastval;
+			res >>= 1;
+		}
+    semi = !semi;
+    outlet_out = res;
+]]></code.srate>
+   </obj.normal>
+</objdefs>

@@ -1,0 +1,25 @@
+<objdefs>
+   <obj.normal id="HexLiner" uuid="7dcdab0489edc04afd2345ea25af81ec7ba3207a" sha="708c3d8b63e79fc21adfdd382545203215ac1ff1">
+      <sDescription>-</sDescription>
+      <author>Johannes Taelman</author>
+      <license>BSD</license>
+      <inlets>
+      </inlets>
+     <displays>
+       <int32.hexlabel name="hex" noLabel="true"/>
+     </displays>
+      <params>
+      </params>
+     <attribs>
+       <table name="line"/>
+     </attribs>
+      <code.declaration><![CDATA[
+]]></code.declaration>
+      <code.init><![CDATA[
+]]></code.init>
+      <code.krate>
+        <![CDATA[     
+        disp_hex = (attr_line);
+]]></code.krate>
+   </obj.normal>
+</objdefs>

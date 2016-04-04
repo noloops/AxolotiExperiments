@@ -1,0 +1,32 @@
+<objdefs>
+   <obj.normal id="MidiDebug" uuid="fbb927dc85400996973e74eec83923cb7bed5416" sha="8a2194781c7183a7e1920f7213f6ceafa239d765">
+      <sDescription>Tracing over mid usb device </sDescription>
+      <author>Jan Hofmann</author>
+      <license>BSD</license>
+      <inlets>
+      </inlets>
+      <outlets/>
+      <displays/>
+     <params>
+       <bool32.mom name="trigger" noLabel="true"/>
+     </params>
+      <attribs>
+      </attribs>
+     <includes>
+       <include>./jho_MidiDebug.h</include>
+     </includes>
+     <code.declaration><![CDATA[int trigState;
+]]></code.declaration>
+     <code.init>
+       <![CDATA[trigState = 1;
+]]>
+     </code.init>
+     <code.krate>
+        <![CDATA[midi_tracer::tracer_.work();
+      if (param_trigger && !trigState) {
+          midi_tracer::tracer_.start();
+      }
+      trigState = param_trigger;
+]]></code.krate>
+   </obj.normal>
+</objdefs>
